@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,  minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover">
+    <!--定义文档视口,防止网页缩放-->
+    <meta name="keywords" content=""><!--网页的关键字信息-->
+    <meta name="description" content=""><!--网页的简介-->
+    <title>标题</title>
+    <style>
+        body, p, h1, h2, h3, h4, h5, h6, ul, ol, dl, dt, dd {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<script src="./promise.js"></script>
+<script>
+    // const p = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject(2)
+    //     }, 100)
+    // }).then(
+    //     value => {
+    //         console.log('onResolved1()', value)
+    //     },
+    //     reason => {
+    //         console.log('onRejected1()', reason)
+    //         // return 3
+    //         // throw 4
+    //         return new Promise((resolve, reject) => {
+    //             reject(5)
+    //         })
+    //     }
+    // ).then(
+    //     value => {
+    //         console.log('onResolved2()', value)
+    //     },
+    //     reason => {
+    //         console.log('onRejected2()', reason)
+    //         throw 6
+    //     }
+    // ).catch(reason => {
+    //     console.log('onResolved3()', reason)
+    //     return new Promise(() => {   // 中断promise链
+    //     })
+    // }).then(value => {
+    //         console.log('onResolved4()', value)
+    //     },
+    //     reason => {
+    //         console.log('onRejected4()', reason)
+    //         throw 7
+    //     })
+
+    const p3 = Promise.resolve(Promise.reject(4))  // 如果是失败的promise，p3失败，reason是这个promise的reason
+    const p1 = Promise.resolve(2)   // 如果是一般指，promise就成功，value就是成功值
+    const p2 = Promise.resolve(Promise.resolve(3))  // 如果是成功的promise，value就是这个promise的value
+
+    // p1.then(value => {
+    //     console.log('p1', value)
+    // })
+    // p2.then(value => {
+    //     console.log('p2', value)
+    // })
+    // p3.catch(reason => {
+    //     console.log('p3', reason)
+    // })
+    const p4 = new Promise((resolve => {
+        setTimeout(() => {
+            resolve(5)
+        }, 1000)
+    }))
+    // const pAll = Promise.all([p1, p2])
+    // pAll.then(value => {
+    //         console.log('race onResolved()', value)
+    //     },
+    //     reason => {
+    //         console.log('race onRejected()', reason)
+    //     })
+    const pRace = Promise.race([p1, p2, p3])
+    pRace.then(value => {
+            console.log('race onResolved()', value)
+        },
+        reason => {
+            console.log('race onRejected()', reason)
+        })
+</script>
+</body>
+</html>
