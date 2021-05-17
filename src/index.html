@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<script src="./promise.js"></script>
+<script src="./promise_class.js"></script>
 <script>
     // const p = new Promise((resolve, reject) => {
     //     setTimeout(() => {
@@ -81,20 +81,25 @@
             resolve(5)
         }, 1000)
     }))
-    // const pAll = Promise.all([p1, p2])
-    // pAll.then(value => {
-    //         console.log('race onResolved()', value)
-    //     },
-    //     reason => {
-    //         console.log('race onRejected()', reason)
-    //     })
-    const pRace = Promise.race([p1, p2, p3])
-    pRace.then(value => {
+    const pAll = Promise.all([p1, p2])
+    pAll.then(value => {
             console.log('race onResolved()', value)
         },
         reason => {
             console.log('race onRejected()', reason)
         })
+    // const pRace = Promise.race([p1, p2, p3])
+    // pRace.then(value => {
+    //         console.log('race onResolved()', value)
+    //     },
+    //     reason => {
+    //         console.log('race onRejected()', reason)
+    //     })
+    // new Promise((resolve, reject) => {
+    //     throw 6
+    // }).catch(reason => {
+    //     console.log(reason)
+    // })
 </script>
 </body>
 </html>
